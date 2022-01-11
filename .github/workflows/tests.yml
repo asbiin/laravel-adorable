@@ -20,7 +20,7 @@ on:
 
 env:
   default-php-version: '8.0'
-  default-laravel-version: '8.x'
+  default-laravel-version: '8.*'
 
 
 jobs:
