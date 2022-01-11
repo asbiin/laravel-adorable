@@ -10,11 +10,31 @@ use Intervention\Image\Image;
 
 class LaravelAdorable
 {
-    const DEFAULT_SIZE = 400;
+    /**
+     * Default avatar size.
+     *
+     * @var int
+     */
+    public const DEFAULT_SIZE = 400;
 
+    /**
+     * @var HashCollection
+     */
     private $colors;
+
+    /**
+     * @var HashCollection
+     */
     private $eyes;
+
+    /**
+     * @var HashCollection
+     */
     private $noses;
+
+    /**
+     * @var HashCollection
+     */
     private $mouths;
 
     /**
@@ -37,12 +57,19 @@ class LaravelAdorable
         $this->mouths = new HashCollection(static::files('mouths'));
     }
 
-    protected static function files(string $type)
+    protected static function files(string $type): array
     {
         return array_slice(scandir(__DIR__."/../../resources/img/$type"), 2);
     }
 
-    public function get(string $size, string $uuid)
+    /**
+     * Get base64 data-url of avatar.
+     *
+     * @param  string  $size
+     * @param  string  $uuid
+     * @return string
+     */
+    public function get(string $size, string $uuid): string
     {
         $values = $this->hash($uuid);
 
@@ -59,7 +86,7 @@ class LaravelAdorable
         });
     }
 
-    private function cacheKey(string $size, string $uuid, array $values): string
+    private function cacheKey(string $size, string $uuid, array &$values): string
     {
         $values['size'] = $size;
         $values['uuid'] = $uuid;
@@ -80,11 +107,8 @@ class LaravelAdorable
         ];
     }
 
-    private function buildAvatar(array $values)
+    private function buildAvatar(array $values): Image
     {
-        $width = $this->config->get('adorable.width');
-        $height = $this->config->get('adorable.height');
-
         /** @var \Intervention\Image\ImageManager $manager */
         $manager = ImageFacade::configure([
             'driver' => $this->config->get('adorable.driver'),
@@ -95,12 +119,12 @@ class LaravelAdorable
         $this->insert($image, $values, 'eyes');
         $this->insert($image, $values, 'noses');
         $this->insert($image, $values, 'mouths');
-        $image->resize($width, $height);
+        $image->resize($values['size'], $values['size']);
 
         return $image;
     }
 
-    private function createShape(Image $image, array $values)
+    private function createShape(Image $image, array $values): void
     {
         $shape = $this->config->get('adorable.shape');
         switch ($shape) {
@@ -117,7 +141,7 @@ class LaravelAdorable
         }
     }
 
-    private function createCircleShape(Image $image, array $values)
+    private function createCircleShape(Image $image, array $values): void
     {
         $circleDiameter = self::DEFAULT_SIZE - $this->config->get('adorable.border.size');
         $x = $y = self::DEFAULT_SIZE / 2;
@@ -133,7 +157,7 @@ class LaravelAdorable
         );
     }
 
-    private function createSquareShape(Image $image, array $values)
+    private function createSquareShape(Image $image, array $values): void
     {
         $edge = (int) ceil($this->config->get('adorable.border.size') / 2);
         $x = $y = $edge;
@@ -151,7 +175,7 @@ class LaravelAdorable
         );
     }
 
-    private function getBorderColor(array $values)
+    private function getBorderColor(array $values): string
     {
         switch ($color = $this->config->get('adorable.border.color')) {
             case 'white':
@@ -165,7 +189,7 @@ class LaravelAdorable
         }
     }
 
-    private function insert(Image $image, array $values, string $type)
+    private function insert(Image $image, array $values, string $type): void
     {
         $filename = $values[$type];
 
