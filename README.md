@@ -9,6 +9,7 @@ LaravelAdorable is an library to generate nice avatars on Laravel.
 [![Quality Gate](https://img.shields.io/sonar/quality_gate/asbiin_laravel-adorable?server=https%3A%2F%2Fsonarcloud.io&style=flat-square&label=Quality%20Gate)](https://sonarcloud.io/dashboard?id=asbiin_laravel-adorable)
 [![Coverage Status](https://img.shields.io/sonar/coverage/asbiin_laravel-adorable?server=https%3A%2F%2Fsonarcloud.io&style=flat-square&label=Coverage%20Status)](https://sonarcloud.io/dashboard?id=asbiin_laravel-adorable)
 
+![avatar1](https://user-images.githubusercontent.com/25419741/149010870-c8203086-f17c-4549-84c3-f145bda6165d.png)
 
 # Installation
 
@@ -34,7 +35,6 @@ Just run this artisan command:
 php artisan vendor:publish --tag="laraveladorable-config"
 ```
 
-
 # Usage
 
 Use `LaravelAdorable` facade to generate avatar:
@@ -43,11 +43,23 @@ Use `LaravelAdorable` facade to generate avatar:
 use Illuminate\Support\Str;
 use LaravelAdorable\Facades\LaravelAdorable;
 
-...
+…
+
   $size = 200;
   $hash = Str::uuid();
   $dataUrl = LaravelAdorable::get($size, $hash);
+  // $dataUrl: "data:image/png;base64,..."
 ```
+
+This generates a base64 [data-url](https://en.wikipedia.org/wiki/Data_URI_scheme) content, like `data:image/png;base64,…`.
+
+
+You can display a data-url in html with:
+
+```html
+  <img src="{{ $dataUrl }}" alt="avatar" />
+```
+
 
 # License
 
@@ -60,3 +72,5 @@ Licensed under the MIT License. [View license](/LICENSE.md).
 # Inspiration
 
 This work is mainly inspired by [itsthatguy/avatars-api-middleware](https://github.com/itsthatguy/avatars-api-middleware) (MIT License).
+
+Images resources are Copyright (c) 2014 Adorable IO LLC.
