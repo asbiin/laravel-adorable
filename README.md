@@ -3,11 +3,11 @@ Adorable Avatar for Laravel
 
 LaravelAdorable is an library to generate nice avatars on Laravel.
 
-[![Latest Version](https://img.shields.io/packagist/v/asbiin/laravel-adorable.svg?style=flat-square)](https://github.com/asbiin/laravel-adorable/releases)
-[![Downloads](https://img.shields.io/packagist/dt/asbiin/laravel-adorable.svg?style=flat-square)](https://packagist.org/packages/asbiin/laravel-adorable)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/asbiin/laravel-adorable/Unit%20tests?style=flat-square)](https://github.com/asbiin/laravel-adorable/actions?query=branch%3Amain)
-[![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/asbiin_laravel-adorable?server=https%3A%2F%2Fsonarcloud.io&style=flat-square)](https://sonarcloud.io/dashboard?id=asbiin_laravel-adorable)
-[![Coverage Status](https://img.shields.io/sonar/https/sonarcloud.io/asbiin_laravel-adorable/coverage.svg?style=flat-square)](https://sonarcloud.io/dashboard?id=asbiin_laravel-adorable)
+[![Latest Version](https://img.shields.io/packagist/v/asbiin/laravel-adorable?style=flat-square&label=Latest%20Version)](https://github.com/asbiin/laravel-adorable/releases)
+[![Downloads](https://img.shields.io/packagist/dt/asbiin/laravel-adorable?style=flat-square&label=Downloads)](https://packagist.org/packages/asbiin/laravel-adorable)
+[![Workflow Status](https://img.shields.io/github/workflow/status/asbiin/laravel-adorable/Unit%20tests?style=flat-square&label=Workflow%20Status)](https://github.com/asbiin/laravel-adorable/actions?query=branch%3Amain)
+[![Quality Gate](https://img.shields.io/sonar/quality_gate/asbiin_laravel-adorable?server=https%3A%2F%2Fsonarcloud.io&style=flat-square&label=Quality%20Gate)](https://sonarcloud.io/dashboard?id=asbiin_laravel-adorable)
+[![Coverage Status](https://img.shields.io/sonar/coverage/asbiin_laravel-adorable?server=https%3A%2F%2Fsonarcloud.io&style=flat-square&label=Coverage%20Status)](https://sonarcloud.io/dashboard?id=asbiin_laravel-adorable)
 
 
 # Installation
