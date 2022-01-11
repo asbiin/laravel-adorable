@@ -35,6 +35,13 @@ Just run this artisan command:
 php artisan vendor:publish --tag="laraveladorable-config"
 ```
 
+This package depends on `intervention/image`. It requires one of the following image libraries:
+  - GD Library (>=2.0)
+  - *or*: Imagick PHP extension (>=6.5.7)
+
+You can configure the image library to use in the `driver` setting of the `config/adorable.php` file.
+
+
 # Usage
 
 Use `LaravelAdorable` facade to generate avatar:
