@@ -55,7 +55,7 @@ Author: [Alexis Saettler](https://github.com/asbiin)
 
 Copyright © 2022.
 
-Licensed under the MIT License. [View license](/LICENSE).
+Licensed under the MIT License. [View license](/LICENSE.md).
 
 # Inspiration
 
