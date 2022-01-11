@@ -105,10 +105,12 @@ class LaravelAdorable
         $shape = $this->config->get('adorable.shape');
         switch ($shape) {
             case 'circle':
-                return $this->createCircleShape($image, $values);
+                $this->createCircleShape($image, $values);
+                break;
 
             case 'square':
-                return $this->createSquareShape($image, $values);
+                $this->createSquareShape($image, $values);
+                break;
 
             default:
                 throw new \InvalidArgumentException("Shape [$shape] currently not supported.");
