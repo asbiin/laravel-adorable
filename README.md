@@ -72,3 +72,5 @@ Licensed under the MIT License. [View license](/LICENSE.md).
 # Inspiration
 
 This work is mainly inspired by [itsthatguy/avatars-api-middleware](https://github.com/itsthatguy/avatars-api-middleware) (MIT License).
+
+Images resources are Copyright (c) 2014 Adorable IO LLC.
