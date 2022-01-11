@@ -1,0 +1,13 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    paths:
+        - src
+    inferPrivatePropertyTypeFromConstructor: true
+    level: 5
+    ignoreErrors:
+    excludes_analyse:
+    stubFiles:
+      - tests/stubs/larastan/Facades.stub

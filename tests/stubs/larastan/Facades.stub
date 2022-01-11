@@ -1,0 +1,10 @@
+<?php
+
+namespace Intervention\Image\Facades;
+
+abstract class Facade {}
+
+/**
+ * @mixin \Intervention\Image\ImageManager
+ */
+class Image extends Facade {}
