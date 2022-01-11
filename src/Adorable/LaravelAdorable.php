@@ -4,9 +4,9 @@ namespace LaravelAdorable\Adorable;
 
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Config\Repository as Config;
-use Intervention\Image\Image;
-use Intervention\Image\Facades\Image as ImageFacade;
 use Intervention\Image\AbstractShape;
+use Intervention\Image\Facades\Image as ImageFacade;
+use Intervention\Image\Image;
 
 class LaravelAdorable
 {
@@ -87,7 +87,7 @@ class LaravelAdorable
 
         /** @var \Intervention\Image\ImageManager $manager */
         $manager = ImageFacade::configure([
-            'driver' => $this->config->get('adorable.driver')
+            'driver' => $this->config->get('adorable.driver'),
         ]);
         $image = $manager->canvas(self::DEFAULT_SIZE, self::DEFAULT_SIZE);
 
@@ -103,8 +103,7 @@ class LaravelAdorable
     private function createShape(Image $image, array $values)
     {
         $shape = $this->config->get('adorable.shape');
-        switch ($shape)
-        {
+        switch ($shape) {
             case 'circle':
                 return $this->createCircleShape($image, $values);
 
@@ -152,8 +151,7 @@ class LaravelAdorable
 
     private function getBorderColor(array $values)
     {
-        switch ($color = $this->config->get('adorable.border.color'))
-        {
+        switch ($color = $this->config->get('adorable.border.color')) {
             case 'white':
                 return '#fff';
 

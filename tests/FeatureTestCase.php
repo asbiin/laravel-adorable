@@ -42,4 +42,3 @@ class FeatureTestCase extends TestCase
         return $method->invokeArgs($object, $parameters);
     }
 }
-

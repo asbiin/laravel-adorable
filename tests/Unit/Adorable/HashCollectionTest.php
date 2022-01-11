@@ -33,11 +33,11 @@ class HashCollectionTest extends FeatureTestCase
     public function hashSum(): array
     {
         return [
-            ["\0" , 0],
-            ['0' , 48],
-            ['a' , 97],
-            ['b' , 98],
-            ['ab' , 195],
+            ["\0", 0],
+            ['0', 48],
+            ['a', 97],
+            ['b', 98],
+            ['ab', 195],
         ];
     }
 }
