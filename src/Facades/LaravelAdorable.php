@@ -5,7 +5,8 @@ namespace LaravelAdorable\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method string get(string $size, string $uuid)
+ * @method static string get(string $size, string $uuid)
+ *
  * @see \LaravelAdorable\Service\LaravelAdorable
  */
 class LaravelAdorable extends Facade

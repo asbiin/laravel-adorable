@@ -57,6 +57,12 @@ class LaravelAdorable
         $this->mouths = new HashCollection(static::files('mouths'));
     }
 
+    /**
+     * Get image files.
+     *
+     * @param  string  $type
+     * @return array
+     */
     protected static function files(string $type): array
     {
         return array_slice(scandir(__DIR__."/../../resources/img/$type"), 2);
