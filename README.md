@@ -53,7 +53,7 @@ use LaravelAdorable\Facades\LaravelAdorable;
 …
 
   $size = 200;
-  $hash = Str::uuid();
+  $hash = Str::uuid()->toString();
   $dataUrl = LaravelAdorable::get($size, $hash);
   // $dataUrl: "data:image/png;base64,..."
 ```
