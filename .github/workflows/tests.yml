@@ -34,7 +34,7 @@ jobs:
         laravel-version: [8.*, 9.*]
         exclude:
           - php-version: 7.4
-            laravel_version: 9.*
+            laravel-version: 9.*
     name: PHP ${{ matrix.php-version }} | Laravel ${{ matrix.laravel-version }}
 
     steps:
@@ -74,7 +74,7 @@ jobs:
       - name: Install dependencies with Laravel ${{ matrix.laravel-version }}
         run: |
           export COMPOSER_ROOT_VERSION=dev-master
-          composer require "laravel/framework:${{ matrix.laravel-version }}" --no-interaction --no-progress --prefer-stable --prefer-dist
+          composer require "illuminate/contracts:${{ matrix.laravel-version }}" "illuminate/support:${{ matrix.laravel-version }}" --no-interaction --no-progress --prefer-stable --prefer-dist
 
       - name: Run test suite
         run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
