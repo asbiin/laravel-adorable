@@ -19,8 +19,9 @@ on:
     types: [completed]
 
 env:
-  default-php-version: '8.0'
+  default-php-version: '8.1'
   default-laravel-version: '8.*'
+  semantic-node-version: 16
 
 
 jobs:
@@ -29,8 +30,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [7.4, 8.0]
-        laravel-version: [8.*]
+        php-version: [7.4, 8.0, 8.1]
+        laravel-version: [8.*, 9.*]
         composer_flags:  ['', '--prefer-lowest']
     name: PHP ${{ matrix.php-version }} | Laravel ${{ matrix.laravel-version }} ${{ matrix.composer_flags }}
 
@@ -96,9 +97,6 @@ jobs:
     name: SonarCloud Scan
     needs: tests
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php-version: [8.0]
 
     steps:
       - name: Checkout repository
@@ -129,19 +127,16 @@ jobs:
     name: Semantic release
     if: github.event_name != 'pull_request'
 
-    env:
-      node-version: 16
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           fetch-depth: 0 # Get all tags
 
-      - name: Use Node.js ${{ env.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.node-version }}
+          node-version: ${{ env.semantic-node-version }}
 
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v2
