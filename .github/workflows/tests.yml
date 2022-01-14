@@ -32,8 +32,7 @@ jobs:
       matrix:
         php-version: [7.4, 8.0, 8.1]
         laravel-version: [8.*, 9.*]
-        composer_flags:  ['', '--prefer-lowest']
-    name: PHP ${{ matrix.php-version }} | Laravel ${{ matrix.laravel-version }} ${{ matrix.composer_flags }}
+    name: PHP ${{ matrix.php-version }} | Laravel ${{ matrix.laravel-version }}
 
     steps:
       - name: Checkout sources
@@ -62,9 +61,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer1-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel-version }}-${{ matrix.composer_flags }}
+          key: ${{ runner.os }}-composer1-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel-version }}
           restore-keys: |
-            ${{ runner.os }}-composer1-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel-version }}-${{ matrix.composer_flags }}
             ${{ runner.os }}-composer1-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel-version }}
             ${{ runner.os }}-composer1-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
             ${{ runner.os }}-composer1-${{ hashFiles('**/composer.json') }}
@@ -73,7 +71,7 @@ jobs:
       - name: Install dependencies with Laravel ${{ matrix.laravel-version }}
         run: |
           export COMPOSER_ROOT_VERSION=dev-master
-          composer require "laravel/framework:${{ matrix.laravel-version }}" --no-interaction --no-progress --prefer-stable --prefer-dist ${{ matrix.composer_flags }}
+          composer require "laravel/framework:${{ matrix.laravel-version }}" --no-interaction --no-progress --prefer-stable --prefer-dist
 
       - name: Run test suite
         run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
@@ -83,7 +81,7 @@ jobs:
         working-directory: results
 
       - name: Store results
-        if: matrix.php-version == env.default-php-version && matrix.laravel-version == env.default-laravel-version && matrix.composer_flags == ''
+        if: matrix.php-version == env.default-php-version && matrix.laravel-version == env.default-laravel-version
         uses: actions/upload-artifact@v2
         with:
           name: results
