@@ -34,7 +34,7 @@ jobs:
         laravel-version: [8.*, 9.*]
         exclude:
           - php-version: 7.4
-            laravel_version: 9.*
+            laravel-version: 9.*
     name: PHP ${{ matrix.php-version }} | Laravel ${{ matrix.laravel-version }}
 
     steps:
