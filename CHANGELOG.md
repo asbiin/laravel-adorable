@@ -1,3 +1,5 @@
+## [1.1.1](https://github.com/asbiin/laravel-adorable/compare/1.1.0...1.1.1) (2022-01-30)
+
 # [1.1.0](https://github.com/asbiin/laravel-adorable/compare/1.0.1...1.1.0) (2022-01-14)
 
 
