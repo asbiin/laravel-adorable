@@ -30,11 +30,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [7.4, 8.0, 8.1]
+        php-version: [8.0, 8.1]
         laravel-version: [8.*, 9.*]
-        exclude:
-          - php-version: 7.4
-            laravel-version: 9.*
     name: PHP ${{ matrix.php-version }} | Laravel ${{ matrix.laravel-version }}
 
     steps:
