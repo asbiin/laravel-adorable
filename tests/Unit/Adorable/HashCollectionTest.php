@@ -22,6 +22,7 @@ class HashCollectionTest extends FeatureTestCase
 
     /**
      * @test
+     *
      * @dataProvider hashSum
      */
     public function it_calculate_hash_sum(string $value, int $expected)
