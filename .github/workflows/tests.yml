@@ -24,12 +24,15 @@ jobs:
     with:
       php-version: ${{ matrix.php-version }}
       laravel-version: ${{ matrix.laravel-version }}
-      coverage: ${{ matrix.php-version == '8.1' && matrix.laravel-version == '8.*' }}
+      coverage: ${{ matrix.php-version == '8.2' && matrix.laravel-version == '10.*' }}
       sonar_project: asbiin_laravel-adorable
       sonar_organization: asbiin-github
 
     strategy:
       fail-fast: false
       matrix:
-        php-version: [8.0, 8.1]
-        laravel-version: [8.*, 9.*]
+        php-version: [8.0, 8.1, 8.2]
+        laravel-version: [8.*, 9.*, 10.*]
+        exclude:
+          - php-version: 8.0
+            laravel-version: 10.*
