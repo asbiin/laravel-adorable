@@ -18,145 +18,18 @@ on:
     workflows: ['Compress images']
     types: [completed]
 
-env:
-  default-php-version: '8.1'
-  default-laravel-version: '8.*'
-  semantic-node-version: 16
-
-
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    uses: monicahq/workflows/.github/workflows/library.yml@init
+    with:
+      php-version: ${{ matrix.php-version }}
+      laravel-version: ${{ matrix.laravel-version }}
+      coverage: ${{ matrix.php-version == '8.1' && matrix.laravel-version == '8.*' }}
+      sonar_project: asbiin_laravel-adorable
+      sonar_organization: asbiin-github
+
     strategy:
       fail-fast: false
       matrix:
         php-version: [8.0, 8.1]
         laravel-version: [8.*, 9.*]
-    name: PHP ${{ matrix.php-version }} | Laravel ${{ matrix.laravel-version }}
-
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v3
-
-      - name: Setup PHP ${{ matrix.php-version }}
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-          coverage: none
-          extension-csv: sqlite, gmp
-      - name: Check PHP Version
-        run: php -v
-      - name: Check Composer Version
-        run: composer -V
-      - name: Check PHP Extensions
-        run: php -m
-
-      - name: Validate composer.json
-        run: composer validate
-
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer files
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer1-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel-version }}
-          restore-keys: |
-            ${{ runner.os }}-composer1-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}-${{ matrix.laravel-version }}
-            ${{ runner.os }}-composer1-${{ hashFiles('**/composer.json') }}-${{ matrix.php-version }}
-            ${{ runner.os }}-composer1-${{ hashFiles('**/composer.json') }}
-            ${{ runner.os }}-composer1-
-
-      - name: Install dependencies with Laravel ${{ matrix.laravel-version }}
-        run: |
-          export COMPOSER_ROOT_VERSION=dev-main
-          composer require "illuminate/support:${{ matrix.laravel-version }}" --no-update
-          composer update --no-interaction --no-progress --prefer-dist
-
-      - name: Run test suite
-        run: phpdbg -dmemory_limit=4G -qrr vendor/bin/phpunit -c phpunit.xml --log-junit ./results/results.xml --coverage-clover ./results/coverage.xml
-
-      - name: Fix results files
-        run: sed -i -e "s%$GITHUB_WORKSPACE/%%g" *.xml
-        working-directory: results
-
-      - name: Store results
-        if: matrix.php-version == env.default-php-version && matrix.laravel-version == env.default-laravel-version
-        uses: actions/upload-artifact@v3
-        with:
-          name: results
-          path: results
-
-
-  ####################
-  # Sonarcloud
-  ####################
-  reporting:
-    name: SonarCloud Scan
-    needs: tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Download results
-        uses: actions/download-artifact@v3
-        with:
-          name: results
-          path: results
-
-      - name: SonarCloud Scan
-        if: env.SONAR_TOKEN != ''
-        uses: SonarSource/sonarcloud-github-action@v1.6
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-
-  ####################
-  # Semantic release
-  ####################
-  semantic-release:
-    needs: tests
-    runs-on: ubuntu-latest
-    name: Semantic release
-    if: github.event_name != 'pull_request'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Get all tags
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.semantic-node-version }}
-
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
-        id: semantic
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
-        with:
-          semantic_version: 18
-          extra_plugins: |
-            conventional-changelog-conventionalcommits@5.0.0
-            @semantic-release/changelog@6
-            semantic-release-github-pullrequest
-
-      - name: New release published
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: echo ${{ steps.semantic.outputs.new_release_version }}
-
-      - name: Store changelog file
-        if: steps.semantic.outputs.new_release_published == 'true'
-        uses: actions/upload-artifact@v3
-        with:
-          name: changelog
-          path: CHANGELOG.md
