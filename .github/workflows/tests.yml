@@ -25,7 +25,6 @@ jobs:
       php-version: ${{ matrix.php-version }}
       laravel-version: ${{ matrix.laravel-version }}
       coverage: ${{ matrix.php-version == '8.2' && matrix.laravel-version == '10.*' }}
-    secrets: inherit
 
     strategy:
       fail-fast: false
@@ -41,12 +40,12 @@ jobs:
     with:
       project: asbiin_laravel-adorable
       organization: asbiin-github
-    secrets: inherit
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     needs: tests
 
   release:
     uses: monicahq/workflows/.github/workflows/release.yml@init
-    secrets: inherit
     needs: tests
 
   junit:
