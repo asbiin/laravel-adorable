@@ -40,6 +40,7 @@ jobs:
     with:
       project: asbiin_laravel-adorable
       organization: asbiin-github
+      sources: src
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     needs: tests
@@ -47,7 +48,7 @@ jobs:
   release:
     uses: monicahq/workflows/.github/workflows/release.yml@init
     secrets:
-        GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
+      GH_TOKEN_RELEASE: ${{ secrets.GH_TOKEN_RELEASE }}
     needs: tests
 
   junit:
