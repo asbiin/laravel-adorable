@@ -48,3 +48,7 @@ jobs:
     uses: monicahq/workflows/.github/workflows/release.yml@init
     secrets: inherit
     needs: tests
+
+  junit:
+    uses: monicahq/workflows/.github/workflows/junit.yml@init
+    needs: tests
