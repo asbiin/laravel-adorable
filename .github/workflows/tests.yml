@@ -19,7 +19,7 @@ on:
     types: [completed]
 
 concurrency:
-  group: Build ${{ github.ref }}
+  group: Tests ${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
